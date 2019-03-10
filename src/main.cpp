@@ -8,8 +8,7 @@ using namespace std;
 struct Word{
 	char first;
 	char last;
-	int length;
-	int order;
+	int len;
 	char raw[MAXSIZE];
 };
 struct ListNode{
@@ -51,7 +50,7 @@ void getWord()
 		strcpy(new_word.raw,cword);
 		new_word.first = cword[0];
 		new_word.last = cword[cword_length - 1];
-		new_word.length = cword_length;
+		new_word.len = cword_length;
 	}
 }
 
@@ -60,8 +59,8 @@ void getWord()
 int main(int argc,char *argv[])
 {
     char absolute_path[512];
-    char head_search_letter; 
-    char tail_search_letter;
+    char head; 
+    char tail;
 	if(argc == 3)
     {
         if(!strcmp(argv[1],"-w") || !strcmp(argv[1],"-c"))
@@ -79,11 +78,11 @@ int main(int argc,char *argv[])
         strcpy(absolute_path,argv[4]); // copy absolute path;
         if(!strcmp(argv[1],"-h"))
         {
-            head_search_letter = argv[2][0]; //3. get head letter which is wanted to search 
+            head = argv[2][0]; //3. get head letter which is wanted to search 
         }
         else if(!strcmp(argv[1],"-t"))
         {
-            tail_search_letter = argv[2][0]; //4. get tail letter which is wanted to search 
+            tail = argv[2][0]; //4. get tail letter which is wanted to search 
         }
         else 
         {
@@ -119,7 +118,7 @@ int main(int argc,char *argv[])
 				strcpy(listnode.w.raw,new_word.raw);
                 listnode.w.first = new_word.first;
                 listnode.w.last = new_word.last;
-                listnode.w.length = new_word.length;
+                listnode.w.len = new_word.len;
                 //listnode.color = 0;
                 if(new_word.first == i+97)
                 {
@@ -135,8 +134,8 @@ int main(int argc,char *argv[])
 	}
 	/*
 	MostWords(wordlist,head_search_letter,tail_search_letter,&result1);
-	MostCharacters(wordlist,head_search_letter,tail_search_letter,&result2);
-	RequiredNumber(wordlist,head_search_letter,tail_search_letter,&result3);
+	MostCharacters(wordlist,head,tail,&result2);
+	RequiredNumber(wordlist,head,tail,&result3);
     */
     /* maybe follow these step:
     1. parse the command line;
