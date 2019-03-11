@@ -61,6 +61,7 @@ int main(int argc,char *argv[])
     char absolute_path[512];
     char head; 
     char tail;
+    int search_num;
 	if(argc == 3)
     {
         if(!strcmp(argv[1],"-w") || !strcmp(argv[1],"-c"))
@@ -84,18 +85,44 @@ int main(int argc,char *argv[])
         {
             tail = argv[2][0]; //4. get tail letter which is wanted to search 
         }
+        else if(!strcmp(argv[1],"-n"))
+        {
+            search_num = argv[2][0];
+        }
         else 
         {
             cout<<"error2!"<<endl;
             return 0;
         }
     }
+    else if(argc == 7)
+    {
+        if((!strcmp(argv[1],"-h")) && (!strcmp(argv[3],"-t")))
+        {
+            head = argv[2][0];
+            tail = argv[4][0];
+            strcpy(absolute_path,argv[6]);
+        }
+        else if((!strcmp(argv[1],"-t")) && (!strcmp(argv[3],"-h")))
+        {
+            head = argv[4][0];
+            tail = argv[2][0];
+            strcpy(absolute_path,argv[6]);
+        }
+        else
+        {
+            {
+                cout<<"error3!"<<endl;
+                return 0;
+            }
+        }
+        
+    }
     else
     {
-        cout<<"error3!"<<endl;
+        cout<<"error4!"<<endl;
         return 0;
     }
-	cout<<absolute_path<<endl;
     if((infile = fopen(absolute_path,"r")) == NULL ) //open file
     {
         cout<<"file not exist!"<<endl;
@@ -133,9 +160,18 @@ int main(int argc,char *argv[])
 		getch(); 
 	}
 	/*
-	MostWords(wordlist,head_search_letter,tail_search_letter,&result1);
-	MostCharacters(wordlist,head,tail,&result2);
-	RequiredNumber(wordlist,head,tail,&result3);
+    if(!strcmp(argv[1],"-w"))
+    {
+	    MostWords(wordlist,head,tail,&result1);
+    }
+    else if(!strcmp(argv[1],"-c"))
+    {
+	    MostCharacters(wordlist,head,tail,&result2);
+    }
+    else if()
+    {
+       RequiredNumber(wordlist,head,tail,&result3);
+    }
     */
     /* maybe follow these step:
     1. parse the command line;
