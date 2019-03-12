@@ -13,6 +13,15 @@ struct Word{
     char* raw;
 };
 
+struct ListNode{
+	struct Word *w,
+	Color color,
+	long distance,
+	ListNode *pi,
+	long d,
+	long f
+};
+
 struct ListArray{
     std::list<Word*> hNoVisited;
     std::list<Word*> hVisited;
