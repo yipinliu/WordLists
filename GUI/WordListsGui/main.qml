@@ -8,12 +8,82 @@ import libbackend 1.0
 
 ApplicationWindow{
     title:"WordListsGui"
+    id:root
     width: 640
     height: 480
     visible: true
 
     BackEnd{
         id:backend
+    }
+    Popup{
+        id: output
+        width:400
+        height: 300
+        anchors.centerIn: parent
+        closePolicy: Popup.CloseOnEscape|Popup.CloseOnReleaseOutside|Popup.CloseOnPressOutsideParent
+        ColumnLayout{
+            anchors.fill: parent
+            spacing: 1
+            ColumnLayout{
+                Rectangle{
+                    border.color: "black"
+                    anchors.fill: parent
+                    TextArea{
+                        anchors.fill: parent
+                        id:output_text
+                        placeholderTextColor: "black"
+                        placeholderText: backend.result
+                    }
+               }
+            }
+            ColumnLayout{
+                RowLayout{
+                    Label{
+                        text: qsTr("文件名")
+                    }
+
+                    TextField {
+                        id: filePath
+                        text: dirPath+"/a.txt"
+                    }
+                }
+
+                RowLayout{
+                    Button{
+                        text: qsTr("退出")
+                        onClicked: output.close()
+                    }
+                    Button{
+                        text: qsTr("保存")
+                        onClicked: {
+
+
+                        }
+                    }
+                }
+            }
+
+        }
+        /*
+        Popup{
+            id:svFile
+            closePolicy: Popup.CloseOnEscape|Popup.CloseOnReleaseOutside
+            RowLayout{
+                Label{
+                    text: qsTr("输入文件名")
+                }
+
+                Button{
+                    text: qsTr("保存")
+                    onClicked: {
+
+                    }
+                }
+            }
+        }
+        */
+
     }
 
     RowLayout{
@@ -22,21 +92,24 @@ ApplicationWindow{
         spacing: 10
         height:410
         ColumnLayout{
-            spacing: 10
-            TextArea{
-                id: text
-                placeholderText: qsTr("Input words...")
-                placeholderTextColor: "green"
-                width: 560
-                height:400
-                textFormat: Text.PlainText
-                wrapMode: Text.WrapAnywhere
-                clip: false
-                opacity: 1
-                verticalAlignment: Text.AlignVCenter
-                onTextChanged: backend.words = placeholderText
-            }
+            Rectangle{
+                id: rectangle
+                anchors.fill: parent
 
+                border.color:"black"
+                TextArea{
+                    id: text
+                    anchors.fill: parent
+                    placeholderText: backend.words
+                    placeholderTextColor: "green"
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WrapAnywhere
+                    clip: false
+                    opacity: 1
+                    //verticalAlignment: Text.AlignVCenter
+                    onTextChanged: backend.words = placeholderText
+                }
+            }
         }
         ColumnLayout{
             spacing:8
@@ -44,7 +117,7 @@ ApplicationWindow{
                 RadioButton{
                     id:w
                     text: qsTr("最多单词")
-                    checked: true
+                    checked: backend.isw
 
                 }
                 RadioButton{
@@ -59,7 +132,7 @@ ApplicationWindow{
 
                 TextField{
                     id:h
-                    placeholderText:  qsTr("type the head char")
+                    placeholderText:  backend.h
                     placeholderTextColor: "green"
                     onTextChanged: backend.h = placeholderText
                 }
@@ -70,7 +143,7 @@ ApplicationWindow{
                 }
                 TextField{
                     id: t
-                    placeholderText: qsTr("type the tail char")
+                    placeholderText: backend.t
                     placeholderTextColor: "green"
                     onTextChanged: backend.t = placeholderText
                 }
@@ -105,11 +178,13 @@ ApplicationWindow{
                 Button{
                    text: qsTr("输出")
                    onClicked: {
-                       console.log("success")
+                       backend.doJob();
+                       output.open();
                    }
                 }
             }
         }
 
-    }
+
+}
 }

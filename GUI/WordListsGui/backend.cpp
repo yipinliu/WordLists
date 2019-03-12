@@ -1,5 +1,7 @@
 #include "backend.hpp"
-BackEnd::BackEnd(QObject* parent):QObject (parent){}
+BackEnd::BackEnd(QObject* parent):QObject (parent){
+    reset();
+}
 QString BackEnd::words() const
 {
     return m_words;
@@ -41,4 +43,19 @@ void BackEnd::setN(int n)
 }
 void BackEnd::setFile(QString file){
     m_file = file;
+}
+void BackEnd::reset(){
+    m_words = "Input the words";
+    m_isw = true;
+    m_h = "Input the head char";
+    m_t = "Input the tail char";
+    m_n = 0;
+    m_file = "";
+    m_result = "the popup";
+}
+void BackEnd::doJob(){
+    m_result = "display success!";
+}
+void BackEnd::svFile(){
+
 }
