@@ -5,7 +5,7 @@
 //error code
 #define NOTENGLISHLETTER -1
 #define NOTFOUND -2
-#define NINF 0xc0c0c0c0
+#define NINF -1
 #include "type.hpp"
 
 
