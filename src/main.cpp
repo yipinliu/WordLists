@@ -12,6 +12,7 @@ using namespace std;
     do{\
         while(*ptr == ' ') ptr++;\
     }while(0)
+#define ISWORDCHAR(c) (c >= 'a'&&c <= 'z' || c>='A'&&c<='Z')
 #define CHECKCHAR(c)\
     do{\
         if(c>= 'A'&&c<='Z') c = c - 'A' + 'a';\
@@ -26,6 +27,13 @@ using namespace std;
         c = *argv[i];\
         CHECKCHAR(c);\
     }while(0)
+#if 1
+#define PRINTF(str) printf(str)
+#define OUT(str) cout<<str<<endl
+#else 
+#define PRINTF(str) 
+#define OUT(str) 
+#endif
 static char h = '\0';
 static char t = '\0';
 static int n = -1;
@@ -103,11 +111,11 @@ ErrorType parseCommandLine(int argc,char**argv){
     for(int i = 1; i < argc; i++){
         char *p = argv[i];
         ESCAPE(p);
-        if(*p != '-'||*p != '"') return INVALID_ARGUMENT;
-        if(*p == '"'){
+        if(*p != '-'&&!ISWORDCHAR(*p)) return INVALID_ARGUMENT;
+        if(*p != '-'){
             if(raw != nullptr) return MULTIPE_SAME;
             raw = p;
-            return PARSE_OK;
+            continue;
         }
         p++;
         if(*p=='w'){
