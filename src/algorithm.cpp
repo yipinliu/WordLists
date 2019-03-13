@@ -84,12 +84,12 @@ long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, l
 				else if(length == (*i).distance && tail != 0 && (*i).w->last == tail && number == -1){
 					lastword.push_front(*i);
 				}
-				else if(number != -1 && (*i).distance == number && tail == 0){
-					length = number;
+				else if(number != -1 && (*i).distance == number - 1 && tail == 0 && !mode){
+					length = number - 1; 
 					lastword.push_front(*i);
 				}
-				else if(number != -1 && (*i).distance == number && tail != 0 && (*i).w->last == tail){
-					length = number;
+				else if(number != -1 && (*i).distance == number - 1 && tail != 0 && (*i).w->last == tail && !mode){
+					length = number - 1;
 					lastword.push_front(*i);
 				}
 				}
@@ -229,13 +229,13 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 			return NOTENGLISHLETTER;
 		}
 		else if(head == 0){
-			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 1, tail, number);
+			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 0, tail, number);
 			if(number == currentlength){
 				result.merge(currentlongest);
 			}
 		}
 		else if('a' <= head && head <= 'z' && (*index)->w->first == head){
-			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 1, tail, number);
+			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 0, tail, number);
 			if(number == currentlength){
 				result.merge(currentlongest);
 			}
