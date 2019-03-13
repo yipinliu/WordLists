@@ -6,6 +6,11 @@
 #ifndef __TYPE_HPP__
 #define __TYPE_HPP__
 #include <list>
+enum Color{
+    BLACK = 0,
+    WHITE,
+    GREY
+};
 struct Word{
     char first;
     char last;
@@ -20,10 +25,13 @@ struct ListNode{
 	ListNode *pi;
 	long d;
 	long f;
+    ListNode():
+        w(nullptr),color(WHITE),distance(0),pi(nullptr),
+        d(0),f(0){}
 };
 
-struct ListArray{
-    list<ListNode> hlist;
-    list<ListNode> tlist;
+struct WordList{
+    std::list<ListNode> hlist;
+    std::list<ListNode> tlist;
 };
 #endif

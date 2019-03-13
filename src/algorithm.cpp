@@ -1,3 +1,6 @@
+#include "algorithm.hpp"
+#include "type.hpp"
+using namespace std;
 //the following two functions are standard dfs and topo sort algorithms
 void DFS(struct WordList *wordlist, list<ListNode> &topo){
 	for(int i = 0; i < 26; i++){

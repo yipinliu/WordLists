@@ -1,12 +1,11 @@
 
 
-#define WHITE 0
-#define GREY 1
-#define BLACk 2
+#ifndef __ALGORITHM_HPP__
+#define __ALGORITHM_HPP__
 //error code
 #define NOTENGLISHLETTER -1
 #define NOTFOUND -2
-
+#include "type.hpp"
 
 
 //This function can find a word chain with most words
@@ -15,7 +14,7 @@
 //@tail: the required tail character of the last word in the chain, it must be 0 if there is no such a requirement
 //@result: the word chain with most words, it's a return value
 //@return value of this function: the number of words in the result chain
-long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>> &result);
+long MostWords(struct WordList *wordlist, char head, char tail, std::list<std::list<Word*>> &result);
 
 //This function can find a word chain with most characters
 //@wordlist: input wordlist
@@ -23,7 +22,7 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 //@tail: the required tail character of the last word in the chain, it must be 0 if there is no such a requirement
 //@result: the word chain with most characters, it's a return value
 //@return value of this function: the number of words in the result chain
-long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<Word*>> &result);
+long MostCharacters(struct WordList *wordlist, char head, char tail, std::list<std::list<Word*>> &result);
 
 //This function can find a word chain with required word number
 //@wordlist: input wordlist
@@ -31,4 +30,5 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 //@tail: the required tail character of the last word in the chain, it must be 0 if there is no such a requirement
 //@result: the list of any word chain meets the requirement, it's a return value
 //@return value of this function: the number of word chains
-long RequiredNumber(struct WordList *wordlist, char head, char tail, long number, list<list<Word*>> &result);
+long RequiredNumber(struct WordList *wordlist, char head, char tail, long number, std::list<std::list<Word*>> &result);
+#endif
