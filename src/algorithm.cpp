@@ -41,7 +41,8 @@ void DFS(struct WordList *wordlist, list<ListNode*> &topo){
 //@mode: define what longest mean, 0 represents most words and 1 represents most characters
 //@tail: this is an optional argument, it must be 0 if there is no requirement for the tail of path
 //@number: this is an optional argument, it must be -1 if there is no requirement for the length of path
-long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, list<list<Word*> > &currentlongest, list<ListNode*>::iterator head, char mode, char tail, long number){
+long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, list<list<Word*> > &currentlongest,
+							 list<ListNode*>::iterator head, char mode, char tail, long number){
 	for(auto index2 = topo.begin(); index2 != topo.end(); index2++){
 		(*index2)->distance = NINF;
 		(*index2)->pi = nullptr;

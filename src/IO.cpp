@@ -97,7 +97,7 @@ char* to_str(list<Word*> &words,bool needNewLine){
     char* p = result;
     auto end = words.end();
     for(auto iter = words.begin(); iter != end; iter++){
-        strncmp(p,(*iter)->raw,(*iter)->len);
+        strncpy(p,(*iter)->raw,(*iter)->len);
         p = &p[(*iter)->len];
         if(needNewLine){
             *p = '\n';
