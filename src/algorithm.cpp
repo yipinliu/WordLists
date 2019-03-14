@@ -129,22 +129,26 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	list<list<Word*> > currentlongest;
 	DFS(wordlist, topo);
 	//printf("lll");
-	//printf("%d",topo.size());
+	//printf("----%d----",topo.size());
 
 	for(auto index = topo.begin(); index != topo.end(); index++){
+		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
 			return NOTENGLISHLETTER;
 		}
 		else if(head == 0){
 			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 0, tail, -1);
-			//printf("%d",currentlength);
 			if(chainlength < currentlength){
 				chainlength = currentlength;
 				result.clear();
+				//printf("..............%d............\n",currentlength);
 				result.merge(currentlongest);
+				//printf(".............%d..........\n",result.size());
 			}
 			else if(chainlength == currentlength && currentlength != 0){
+				//printf("..............%d............\n",currentlength);
 				result.merge(currentlongest);
+				//printf(".............%d..........\n",result.size());
 			}
 		}
 		else if('a' <= head && head <= 'z' && (*index)->w->first == head){
@@ -162,7 +166,7 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	/*printf("%d\n",result.size());
+	/*printf("----------------%d\n",result.size());
 	for(auto j = result.begin(); j!=result.end(); j++){
 		for(auto k = (*j).begin(); k != (*j).end(); k++){
 			printf("%s",(*k)->raw);
@@ -179,6 +183,7 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	list<list<Word*> > currentlongest;
 	DFS(wordlist, topo);
 	for(auto index = topo.begin(); index != topo.end(); index++){
+		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
 			return NOTENGLISHLETTER;
 		}
@@ -208,7 +213,7 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	/*printf("%d\n",result.size());
+	/*printf("------------------------%d\n",result.size());
 	for(auto j = result.begin(); j!=result.end(); j++){
 		for(auto k = (*j).begin(); k != (*j).end(); k++){
 			printf("%s",(*k)->raw);
@@ -226,6 +231,7 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 	list<list<Word*> > currentlongest;
 	DFS(wordlist, topo);
 	for(auto index = topo.begin(); index != topo.end(); index++){
+		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
 			return NOTENGLISHLETTER;
 		}
