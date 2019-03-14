@@ -16,6 +16,15 @@ ApplicationWindow{
     BackEnd{
         id:backend
     }
+    function reset(){
+        input_text.text = "";
+        w.checked = true;
+        h.text = "";
+        t.text = "";
+        n.value = 0;
+        //fileDialog.fileUrl = "";
+    }
+
     Popup{
         id: output
         width:400
@@ -32,6 +41,7 @@ ApplicationWindow{
                     TextArea{
                         anchors.fill: parent
                         id:output_text
+                        readOnly: true
                         placeholderTextColor: "black"
                         placeholderText: backend.result
                     }
@@ -52,13 +62,20 @@ ApplicationWindow{
                 RowLayout{
                     Button{
                         text: qsTr("退出")
-                        onClicked: output.close()
+                        onClicked: {
+                            backend.reset();
+                            root.reset();
+                            output.close();
+                        }
                     }
                     Button{
                         text: qsTr("保存")
                         onClicked: {
-
-
+                            backend.path = filePath.text;
+                            backend.svFile();
+                            backend.reset();
+                            root.reset();
+                            output.close();
                         }
                     }
                 }
@@ -98,8 +115,7 @@ ApplicationWindow{
 
                 border.color:"black"
                 TextArea{
-                    id: text
-                    anchors.fill: parent
+                    id: input_text
                     placeholderText: backend.words
                     placeholderTextColor: "green"
                     textFormat: Text.PlainText
@@ -107,7 +123,9 @@ ApplicationWindow{
                     clip: false
                     opacity: 1
                     //verticalAlignment: Text.AlignVCenter
-                    onTextChanged: backend.words = placeholderText
+                    onTextChanged: {
+                        backend.words = input_text.text
+                    }
                 }
             }
         }
@@ -134,7 +152,7 @@ ApplicationWindow{
                     id:h
                     placeholderText:  backend.h
                     placeholderTextColor: "green"
-                    onTextChanged: backend.h = placeholderText
+                    onTextChanged: backend.h = h.text
                 }
             }
             RowLayout{
@@ -145,7 +163,7 @@ ApplicationWindow{
                     id: t
                     placeholderText: backend.t
                     placeholderTextColor: "green"
-                    onTextChanged: backend.t = placeholderText
+                    onTextChanged: backend.t = t.text
                 }
             }
             RowLayout{
@@ -180,6 +198,7 @@ ApplicationWindow{
                    onClicked: {
                        backend.doJob();
                        output.open();
+                       output_text.text = backend.result
                    }
                 }
             }

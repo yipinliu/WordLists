@@ -76,8 +76,8 @@ int main(int argc,char *argv[])
     printf("%s\n",err_msg[state]);
     if(state != PARSE_OK) return 0;
     if(file){
-        IOErrorType type = fileToStr(file,&raw);
-        if(type != IO_OK){
+        int no = fileToStr(file,&raw);
+        if(raw == nullptr){
             printf("Error: invalid file");
             return 0;
         }
@@ -96,7 +96,7 @@ int main(int argc,char *argv[])
     }
     printf("%d\n", result_num);
     for(auto& e: results){
-        printf("%s\n",to_str(e,true));
+        printf("%s\n",to_str(e,(n != -1 ||isw)));
     }
     return 0;
 }

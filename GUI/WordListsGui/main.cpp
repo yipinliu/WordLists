@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<BackEnd>("libbackend",1,0,"BackEnd");
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("dirPath",QGuiApplication::applicationDirPath());
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
-    engine.rootContext()->setContextProperty("dirPath",QGuiApplication::applicationDirPath());
+
     return app.exec();
 }

@@ -9,28 +9,31 @@ using namespace std;
         while(*ptr != '\0'&&IS_DELIMITER(*ptr)) ptr++;\
     }while(0)
 
-IOErrorType fileToStr(char* fileName, char** raw){
+int fileToStr(const char* fileName, char** raw){
     FILE *file = fopen(fileName,"rb");
-    if(!file) return ILLEGAL_FILE;
+    if(!file){
+        *raw = nullptr;
+        return errno;
+    }
     fseek(file,0,SEEK_END);
     int len = ftell(file);
     fseek(file,0,SEEK_SET);
-    char* p = (char*)(malloc(sizeof(len+1)));
+    char* p = (char*)(malloc(len+1));
     fread(p,sizeof(char),len,file);
     p[len] = '\0';
     *raw = p;
     fclose(file);
     return IO_OK;
 }
-IOErrorType strToFile(char* fileName, char* raw, int len){
+int strToFile(char* fileName, char* raw, int len){
     FILE* file = fopen(fileName, "wb");
-    if(!file) return ILLEGAL_FILE;
+    if(!file) return errno;
     fwrite(raw,sizeof(char),len,file);
     fclose(file);
     return IO_OK;
     
 }
-void charCopy(char* src, char* dst, int len){
+void charCopy(const char* src, char* dst, int len){
     for(int i = 0; i< len; i++){
         if(src[i]>='A'&&src[i]<='Z')
             dst[i] = src[i] - 'A' + 'a';
@@ -48,8 +51,8 @@ list<ListNode>::iterator getPosition(list<ListNode>& ls,ListNode& ln){
     }
     return end;
 }
-Word* getOneWord(char** raw){
-    char* p = *raw;
+Word* getOneWord(const char** raw){
+    const char* p = *raw;
     ESCAPE_DELIMITER(p);
     if(*p=='\0'){
         *raw = p;
@@ -67,9 +70,9 @@ Word* getOneWord(char** raw){
     return word;
 
 }
-WordList* getWords(char* raw){
+WordList* getWords(const char* raw){
     WordList* wordlist = new WordList[26];
-    char*p = raw;
+    const char*p = raw;
     while(*p != '\0'){
         auto word = getOneWord(&p);
         if(word == nullptr) continue;

@@ -14,7 +14,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    backend.cpp
+    backend.cpp \
+    main.cpp \
+    WordLists/algorithm.cpp \
+    WordLists/IO.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    backend.hpp
+    backend.hpp \
+    WordLists/algorithm.hpp \
+    WordLists/IO.hpp \
+    WordLists/type.hpp \

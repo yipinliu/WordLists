@@ -6,14 +6,14 @@
 class BackEnd :public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString words READ words WRITE setWords)
-    Q_PROPERTY(bool isw READ isw WRITE setIsw)
-    Q_PROPERTY(QString h READ h WRITE setH)
-    Q_PROPERTY(QString t READ t WRITE setT)
-    Q_PROPERTY(int n READ n WRITE setN)
-    Q_PROPERTY(QString file READ file WRITE setFile)
-    Q_PROPERTY(QString result READ result WRITE setResult)
-    Q_PROPERTY(QString path READ path WRITE setPath)
+    Q_PROPERTY(QString words READ words WRITE setWords NOTIFY wordsChanged)
+    Q_PROPERTY(bool isw READ isw WRITE setIsw NOTIFY iswChanged)
+    Q_PROPERTY(QString h READ h WRITE setH NOTIFY hChanged)
+    Q_PROPERTY(QString t READ t WRITE setT NOTIFY tChanged)
+    Q_PROPERTY(int n READ n WRITE setN NOTIFY nChanged)
+    Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged)
+    Q_PROPERTY(QString result READ result WRITE setResult NOTIFY resultChanged)
+    Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     QString m_words;
     bool m_isw;
 
@@ -36,12 +36,26 @@ public:
     QString file()const;
     int n()const;
     QString result()const{return m_result;}
-    QStirng path()const{return m_path;}
+    QString path()const{return m_path;}
 
     Q_INVOKABLE void doJob();
     Q_INVOKABLE void svFile();
+    Q_INVOKABLE void reset();
+signals:
+    void wordsChanged();
+    void hChanged();
+    void tChanged();
+    void nChanged();
+    void fileChanged();
+    void pathChanged();
+    void iswChanged();
+    void resultChanged();
 private:
-    void reset();
+    char* c_raw;
+    char* c_file;
+    char c_h;
+    char c_t;
+    int convert();
 public slots:
     void setWords(QString words);
     void setIsw(bool isw);
@@ -53,6 +67,7 @@ public slots:
         m_result = result;
     }
     void setPath(QString path){m_path = path;}
+
 };
 
 #endif // BACKEND_HPP
