@@ -241,6 +241,20 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 			}
 		}
 	}
+	for(auto i = result.begin(); i != result.end(); i++){
+		if((*i).front()->first == (*i).back()->last){
+			list<Word*> temp;
+			temp.merge(*i);
+			for(int k = 0; k < (*i).size(); k++){
+				Word* front = temp.front();
+				temp.pop_front();
+				temp.push_back(front);
+				result.push_front(temp);
+				chainnumber++;
+			}
+
+		}
+	}
 	chainnumber = result.size();
 	if(chainnumber == 0)
 		return NOTFOUND;
