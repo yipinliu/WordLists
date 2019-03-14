@@ -98,6 +98,7 @@ int main(int argc,char *argv[])
     for(auto& e: results){
         printf("%s\n",to_str(e,(n != -1 ||isw)));
     }
+    delete[] wordList;
     return 0;
 }
 ErrorType checkInput(){

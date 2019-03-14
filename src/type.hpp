@@ -16,6 +16,7 @@ struct Word{
     char last;
     int len;
     char* raw;
+    Word():first('\0'),last('\0'),len(0),raw(nullptr){}
 };
 
 struct ListNode{

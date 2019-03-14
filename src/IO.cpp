@@ -1,6 +1,7 @@
 #include "IO.hpp"
 #include <stdio.h>
 #include <string.h>
+
 using namespace std;
 #define IS_ELEMENT(c) ((c)>='a'&&(c)<='z'||(c)>='A'&&(c)<='Z')
 #define IS_DELIMITER(c) (!IS_ELEMENT(c))
@@ -51,7 +52,7 @@ list<ListNode>::iterator getPosition(list<ListNode>& ls,ListNode& ln){
     }
     return end;
 }
-Word* getOneWord(const char** raw){
+Word* getOneWord(const char** raw,Trie &tree){
     const char* p = *raw;
     ESCAPE_DELIMITER(p);
     if(*p=='\0'){
@@ -60,6 +61,11 @@ Word* getOneWord(const char** raw){
     }
     int i = 0;
     while(p[i] != '\0'&&IS_ELEMENT(p[i])) i++;
+    bool exist = tree.insert(p,i);
+    if(exist){
+        *raw = &p[i];
+        return nullptr;
+    }
     Word* word = new Word;
     word->raw = new char[i];
     word->len = i;
@@ -73,8 +79,9 @@ Word* getOneWord(const char** raw){
 WordList* getWords(const char* raw){
     WordList* wordlist = new WordList[26];
     const char*p = raw;
+    Trie tree;
     while(*p != '\0'){
-        auto word = getOneWord(&p);
+        auto word = getOneWord(&p,tree);
         if(word == nullptr) continue;
         ListNode hnode, tnode;
         hnode.w = word;
