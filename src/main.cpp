@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <list>
+#include <string>
 
 #include "IO.hpp"
 #include "algorithm.hpp"
@@ -56,7 +57,7 @@ enum ErrorType{
     NO_INPUT,
     MULTIPE_INPUT
 };
-char* err_msg[] = {
+string err_msg[] = {
     "please wait...",
     "Error: you must assign a searching type(-w/-c/-n)!",
     "Error: missing argument!",
@@ -73,7 +74,7 @@ ErrorType parseCommandLine(int argc, char** argv);
 int main(int argc,char *argv[])
 {
     ErrorType state = parseCommandLine(argc,argv);
-    printf("%s\n",err_msg[state]);
+    cout<<err_msg[state]<<endl;
     if(state != PARSE_OK) return 0;
     if(file){
         int no = fileToStr(file,&raw);
@@ -94,9 +95,9 @@ int main(int argc,char *argv[])
     else{
         result_num = MostCharacters(wordList,h,t,results);
     }
-    printf("%d\n", result_num);
+    cout<<result_num<<endl;
     for(auto& e: results){
-        printf("%s\n",to_str(e,(n != -1 ||isw)));
+        cout<<to_str(e,(n!=-1 || isw))<<endl;
     }
     delete[] wordList;
     return 0;

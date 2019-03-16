@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <fstream>
+#include <iostream>
+
 using namespace std;
 #define IS_ELEMENT(c) ((c)>='a'&&(c)<='z'||(c)>='A'&&(c)<='Z')
 #define IS_DELIMITER(c) (!IS_ELEMENT(c))
@@ -9,7 +12,7 @@ using namespace std;
     do{\
         while(*ptr != '\0'&&IS_DELIMITER(*ptr)) ptr++;\
     }while(0)
-
+/*
 int fileToStr(const char* fileName, char** raw){
     FILE *file = fopen(fileName,"rb");
     if(!file){
@@ -25,6 +28,19 @@ int fileToStr(const char* fileName, char** raw){
     *raw = p;
     fclose(file);
     return IO_OK;
+}*/
+int fileToStr(const char* fileName, char** raw){
+    ifstream infile(fileName);
+    if(infile.fail()) return 1;
+    infile.seekg(0,infile.end);
+    size_t len = infile.tellg();
+    infile.seekg(0,infile.beg);
+    char* tmp = new char[len+1];
+    infile.read(tmp,len);
+    tmp[len] = '\0';
+    infile.close();
+    *raw = tmp;
+    return 0;
 }
 int strToFile(char* fileName, char* raw, int len){
     FILE* file = fopen(fileName, "wb");
@@ -78,6 +94,7 @@ Word* getOneWord(const char** raw,Trie &tree){
 }
 WordList* getWords(const char* raw){
     WordList* wordlist = new WordList[26];
+    //cout<<raw<<endl;
     const char*p = raw;
     Trie tree;
     while(*p != '\0'){

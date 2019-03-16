@@ -1,13 +1,16 @@
 #include "trie.hpp"
 bool Trie::insert(const char* word, int len){
-    Node* cur = root;
-    Node* p = cur;
+    Trie::Node* cur = root;
+    Trie::Node* p = cur;
     for(int i = 0; i < len; i++){
         char c = word[i];
         if(cur->child == nullptr){
             cur->child = new Node[26];
         }
-        cur = &cur->child[c - 'a'];
+        int index = 0;
+        if(c>='a'&&c<='z') index = c - 'a';
+        else index = c - 'A';
+        cur = &cur->child[index];
     }
     if(cur->end) return true;
     cur->end = true;
