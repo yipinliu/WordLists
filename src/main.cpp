@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <list>
 #include <string>
+#include <fstream>
 
 #include "IO.hpp"
 #include "algorithm.hpp"
@@ -70,6 +71,7 @@ string err_msg[] = {
     "Error: file and word list are alternative"
 };
 ErrorType parseCommandLine(int argc, char** argv);
+void output(int result_num, list<list<Word*> >&results);
 
 int main(int argc,char *argv[])
 {
@@ -95,11 +97,7 @@ int main(int argc,char *argv[])
     else{
         result_num = MostCharacters(wordList,h,t,results);
     }
-    cout<<result_num<<endl;
-    for(auto& e: results){
-        cout<<to_str(e,(n!=-1 || isw))<<endl;
-        cout<<endl;
-    }
+    output(result_num,results);
     delete[] wordList;
     return 0;
 }
@@ -154,4 +152,30 @@ ErrorType parseCommandLine(int argc,char**argv){
         } 
     }
     return checkInput();
+}
+void output(int result_num, list<list<Word*> >&results){
+    cout<<"Job done."<<endl;
+    cout<<"Save results to file[Y] or show them in terminal[N]?";
+    char type = 'N';
+    cin>>type;
+    if(type == 'N' || type == 'n'){
+        cout<<result_num<<endl;
+        for(auto& e: results){
+            cout<<to_str(e,(n!=-1 || isw))<<endl;
+            cout<<endl;
+        }
+    }
+    else{
+        cout<<"input file name: ";
+        string fileName;
+        cin>>fileName;
+        ofstream of(fileName,ios_base::out|ios_base::binary);
+        string outStr = to_string(result_num) + "\n";
+        for(auto& e:results){
+            outStr += string(to_str(e,(n!=-1||isw)));
+        }
+        of.write(outStr.data(),outStr.length());
+        of.close();
+    }
+
 }
