@@ -98,6 +98,7 @@ int main(int argc,char *argv[])
     cout<<result_num<<endl;
     for(auto& e: results){
         cout<<to_str(e,(n!=-1 || isw))<<endl;
+        cout<<endl;
     }
     delete[] wordList;
     return 0;
