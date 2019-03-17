@@ -18,7 +18,7 @@ void DFS_Visit(struct ListNode &v, struct WordList *wordlist, long &time, list<L
 	topo.push_front((ListNode *)&v);
 }
 
-void DFS(struct WordList *wordlist, list<ListNode*> &topo, char head){
+void DFS(struct WordList *wordlist, list<ListNode*> &topo, char head, char tail){
 	int i = 0;
 	for(i = 0; i < 26; i++){
 		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
@@ -34,11 +34,54 @@ void DFS(struct WordList *wordlist, list<ListNode*> &topo, char head){
 	}
 	for(; i < 26; i++){
 		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
-			if((*iter).color == WHITE){
+			if((*iter).color == WHITE && (tail == 0 || (tail != 0 && (*iter).w->last != tail))){
 				DFS_Visit((*iter), wordlist, time, topo);
 			}
+			else if((*iter).color == WHITE && (tail != 0 && (*iter).w->last == tail)){
+				continue;
+			}
+		}
+		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
+			if((*iter).color == WHITE)
+				DFS_Visit((*iter), wordlist, time, topo);
 		}
 	}
+	for(i = head - 'a'; i >= 0 ; i--){
+		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
+			if((*iter).color == WHITE && (tail == 0 || (tail != 0 && (*iter).w->last != tail))){
+				DFS_Visit((*iter), wordlist, time, topo);
+			}
+			else if((*iter).color == WHITE && (tail != 0 && (*iter).w->last == tail)){
+				continue;
+			}
+		}
+		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
+			if((*iter).color == WHITE)
+				DFS_Visit((*iter), wordlist, time, topo);
+		}
+	}
+	/*if(tail >= 'a' && tail <= 'z'){
+		list<ListNode*> topo_temp;
+		list<ListNode*> tail_temp;
+		topo_temp.merge(topo);
+		for(auto iter = topo_temp.begin(); iter != topo_temp.end(); iter++){
+			if((*iter)->w->last == tail){
+				tail_temp.push_back((*iter));
+			}
+			else{
+				topo.push_back((*iter));
+			}
+		}
+		for(auto iter = tail_temp.begin(); iter != tail_temp.end(); iter++){
+			topo.push_back((*iter));
+		}
+		for(auto iter = topo.begin(); iter != topo.end(); iter++){
+			printf("%s\n",(*iter)->w->raw);
+		}
+	}*/
+	/*for(auto iter = topo.begin(); iter != topo.end(); iter++){
+			printf("%s\n",(*iter)->w->raw);
+		}*/
 }
 
 
@@ -82,7 +125,13 @@ long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, l
 					lastword.push_front(*i);
 				}
 				else if(length == (*i).distance && tail == 0 && number == -1){
-					lastword.push_front(*i);
+					int flag = 0;
+					for(auto iter = lastword.begin(); iter != lastword.end(); iter++){
+						if(strcmp((*iter).w->raw, (*i).w->raw) == 0)
+							flag = -1;
+					}
+					if(flag == 0)
+						lastword.push_front(*i);
 				}
 				else if(length < (*i).distance && tail != 0 && (*i).w->last == tail && number == -1){
 					length = (*i).distance;
@@ -90,15 +139,33 @@ long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, l
 					lastword.push_front(*i);
 				}
 				else if(length == (*i).distance && tail != 0 && (*i).w->last == tail && number == -1){
-					lastword.push_front(*i);
+					int flag = 0;
+					for(auto iter = lastword.begin(); iter != lastword.end(); iter++){
+						if(strcmp((*iter).w->raw, (*i).w->raw) == 0)
+							flag = -1;
+					}
+					if(flag == 0)
+						lastword.push_front(*i);
 				}
 				else if(number != -1 && (*i).distance == number - 1 && tail == 0 && !mode){
 					length = number - 1; 
-					lastword.push_front(*i);
+					int flag = 0;
+					for(auto iter = lastword.begin(); iter != lastword.end(); iter++){
+						if(strcmp((*iter).w->raw, (*i).w->raw) == 0)
+							flag = -1;
+					}
+					if(flag == 0)
+						lastword.push_front(*i);
 				}
 				else if(number != -1 && (*i).distance == number - 1 && tail != 0 && (*i).w->last == tail && !mode){
 					length = number - 1;
-					lastword.push_front(*i);
+					int flag = 0;
+					for(auto iter = lastword.begin(); iter != lastword.end(); iter++){
+						if(strcmp((*iter).w->raw, (*i).w->raw) == 0)
+							flag = -1;
+					}
+					if(flag == 0)
+						lastword.push_front(*i);
 				}
 				}
 			}
@@ -129,12 +196,12 @@ long SingleSourceLongestPath(struct WordList *wordlist, list<ListNode*> &topo, l
 		return length+(*head)->w->len;
 }
 
-long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
+long MostWords2(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
 	long chainlength = 0;
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo, head);
+	DFS(wordlist, topo, head, tail);
 	//printf("lll");
 	//printf("----%d----",topo.size());
 
@@ -183,12 +250,38 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	return chainlength;
 }
 
-long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
+long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
+	list<list<Word*> > temp_result;
+	long chainlength = 0;
+	long currentlength = 0;
+	if(tail != 0 && head == 0){
+		for(int i = 'a';i < 'z'; i++){
+			temp_result.clear();
+			currentlength=MostWords2(wordlist,i,tail,temp_result);
+			if(currentlength > chainlength){
+				result.clear();
+				result.merge(temp_result);
+				chainlength = currentlength;
+			}
+			else if(currentlength == chainlength && currentlength != 0){
+				result.merge(temp_result);
+			}
+		}
+	}
+	else{
+		chainlength=MostWords2(wordlist,head,tail,result);
+	}
+	if(chainlength == 0)
+		return NOTFOUND;
+	return chainlength;
+}
+
+long MostCharacters2(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
 	long chainlength = 0;
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo, head);
+	DFS(wordlist, topo, head, tail);
 	for(auto index = topo.begin(); index != topo.end(); index++){
 		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
@@ -230,13 +323,40 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	return chainlength;
 }
 
-long RequiredNumber(struct WordList *wordlist, char head, char tail, long number, list<list<Word*> > &result){
+long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<Word*> > &result){
+	list<list<Word*> > temp_result;
+	long chainlength = 0;
+	long currentlength = 0;
+	if(tail != 0 && head == 0){
+		for(int i = 'a';i < 'z'; i++){
+			temp_result.clear();
+			currentlength=MostCharacters2(wordlist,i,tail,temp_result);
+			if(currentlength > chainlength){
+				result.clear();
+				result.merge(temp_result);
+				chainlength = currentlength;
+			}
+			else if(currentlength == chainlength && currentlength != 0){
+				result.merge(temp_result);
+			}
+		}
+	}
+	else{
+		chainlength=MostCharacters2(wordlist,head,tail,result);
+	}
+	if(chainlength == 0)
+		return NOTFOUND;
+	return chainlength;
+}
+
+long RequiredNumber2(struct WordList *wordlist, char head, char tail, long number, list<list<Word*> > &result){
 	long chainnumber = 0;
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentchain;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo, head);
+	list<list<Word*> > temp_result;
+	DFS(wordlist, topo, head, tail);
 	for(auto index = topo.begin(); index != topo.end(); index++){
 		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
@@ -278,4 +398,27 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 	if(chainnumber == 0)
 		return NOTFOUND;
 	return chainnumber;
+}
+
+long RequiredNumber(struct WordList *wordlist, char head, char tail, long number, list<list<Word*> > &result){
+	list<list<Word*> > temp_result;
+	int chainnumber=0;
+	int totalnumber=0;
+	if(tail != 0 && head == 0){
+		for(int i = 'a';i < 'z'; i++){
+			temp_result.clear();
+			chainnumber=RequiredNumber2(wordlist,i,tail,number,temp_result);
+			if(chainnumber > 0){
+				result.merge(temp_result);
+				totalnumber+=chainnumber;
+			}
+		}
+	}
+	else{
+		chainnumber=RequiredNumber2(wordlist,head,tail,number,result);
+		totalnumber = chainnumber;
+	}
+	if(totalnumber == 0)
+		return NOTFOUND;
+	return totalnumber;
 }
