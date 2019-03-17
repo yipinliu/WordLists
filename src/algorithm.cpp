@@ -18,14 +18,21 @@ void DFS_Visit(struct ListNode &v, struct WordList *wordlist, long &time, list<L
 	topo.push_front((ListNode *)&v);
 }
 
-void DFS(struct WordList *wordlist, list<ListNode*> &topo){
-	for(int i = 0; i < 26; i++){
+void DFS(struct WordList *wordlist, list<ListNode*> &topo, char head){
+	int i = 0;
+	for(i = 0; i < 26; i++){
 		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
 			(*iter).color = WHITE;
 		}
 	}
 	long time = 0;
-	for(int i = 0; i < 26; i++){
+	if(head == 0){
+		i = 0;
+	}
+	else if(head >= 'a' && head <= 'z'){
+		i = head - 'a';
+	}
+	for(; i < 26; i++){
 		for(auto iter = wordlist[i].hlist.begin(); iter != wordlist[i].hlist.end(); iter++){
 			if((*iter).color == WHITE){
 				DFS_Visit((*iter), wordlist, time, topo);
@@ -127,7 +134,7 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo);
+	DFS(wordlist, topo, head);
 	//printf("lll");
 	//printf("----%d----",topo.size());
 
@@ -181,7 +188,7 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo);
+	DFS(wordlist, topo, head);
 	for(auto index = topo.begin(); index != topo.end(); index++){
 		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
@@ -229,7 +236,7 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 	list<ListNode*> topo;
 	list<list<Word*> > currentchain;
 	list<list<Word*> > currentlongest;
-	DFS(wordlist, topo);
+	DFS(wordlist, topo, head);
 	for(auto index = topo.begin(); index != topo.end(); index++){
 		currentlongest.clear();
 		if(!((head == 0 || (head >= 'a' && head <= 'z')) && (tail == 0 || (tail >= 'a' && tail <= 'z')))){
@@ -248,7 +255,7 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 			}
 		}
 	}
-	for(auto i = result.begin(); i != result.end(); i++){
+		for(auto i = result.begin(); i != result.end(); i++){
 		if((*i).front()->first == (*i).back()->last){
 			list<Word*> temp;
 			long size = (*i).size();
@@ -259,11 +266,14 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 				Word* front = temp.front();
 				temp.pop_front();
 				temp.push_back(front);
+				if((head == 0 && tail == 0) || (head != 0 && temp.front()->first == head && tail == 0) 
+					|| (head !=0 && temp.front()->first == head && tail != 0 && temp.back()->last == tail)
+					|| (head == 0 && tail != 0 && temp.back()->last == tail))
 				result.push_front(temp);
 			}
-
 		}
 	}
+	
 	chainnumber = result.size();
 	if(chainnumber == 0)
 		return NOTFOUND;
