@@ -1,3 +1,4 @@
+add_definitions(-std=c++11)
 file(GLOB SRC_LIST
     "*.hpp",
     "*.cpp")
