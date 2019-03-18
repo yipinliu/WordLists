@@ -273,6 +273,12 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
+	for(auto iter = result.begin(); iter != result.end(); iter++){
+		if((*iter).size() == 1)
+			result.erase(iter);
+	}
+	if(result.size() == 0)
+		return NOTFOUND;
 	return chainlength;
 }
 
@@ -345,6 +351,12 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 		chainlength=MostCharacters2(wordlist,head,tail,result);
 	}
 	if(chainlength == 0)
+		return NOTFOUND;
+	for(auto iter = result.begin(); iter != result.end(); iter++){
+		if((*iter).size() == 1)
+			result.erase(iter);
+	}
+	if(result.size() == 0)
 		return NOTFOUND;
 	return chainlength;
 }
