@@ -1,5 +1,6 @@
 #include "algorithm.hpp"
 #include "type.hpp"
+#include <string.h>
 using namespace std;
 //the following two functions are standard dfs and topo sort algorithms
 void DFS_Visit(struct ListNode &v, struct WordList *wordlist, long &time, list<ListNode*> &topo){
