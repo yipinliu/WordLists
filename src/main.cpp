@@ -72,6 +72,7 @@ string err_msg[] = {
 };
 ErrorType parseCommandLine(int argc, char** argv);
 void output(int result_num, list<list<Word*> >&results);
+bool checkWordList(WordList* wordlist);
 
 int main(int argc,char *argv[])
 {
@@ -80,12 +81,16 @@ int main(int argc,char *argv[])
     if(state != PARSE_OK) return 0;
     if(file){
         int no = fileToStr(file,&raw);
-        if(raw == nullptr){
-            printf("Error: invalid file");
-            return 0;
-        }
+    }
+    if(raw == nullptr){
+        printf("Error: invalid input");
+        return 0;
     }
     auto wordList = getWords(raw);
+    if(!checkWordList(wordList)){
+        cout<<"Error: no valid word!"<<endl;
+        return 0;
+    }
     list<list<Word*> >results;
     long result_num = 0;
     if(n!=-1){
@@ -155,6 +160,10 @@ ErrorType parseCommandLine(int argc,char**argv){
 }
 void output(int result_num, list<list<Word*> >&results){
     cout<<"Job done."<<endl;
+    if(result_num <= 0){
+        cout<<"Error: result is not found"<<endl;
+        return;
+    }
     cout<<"Save results to file[Y] or show them in terminal[N]?";
     char type = 'N';
     cin>>type;
@@ -178,4 +187,11 @@ void output(int result_num, list<list<Word*> >&results){
         of.close();
     }
 
+}
+bool checkWordList(WordList* wordList){
+    if(wordList == nullptr) return false;
+    for(int i = 0; i < 26; i++){
+        if(!wordList[i].hlist.empty()) return true;
+    }
+    return false;
 }

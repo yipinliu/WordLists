@@ -34,6 +34,11 @@ int fileToStr(const char* fileName, char** raw){
     if(infile.fail()) return 1;
     infile.seekg(0,infile.end);
     size_t len = infile.tellg();
+    if(len <= 0){
+        infile.close();
+        *raw = nullptr;
+        return -1;
+    }
     infile.seekg(0,infile.beg);
     char* tmp = new char[len+1];
     infile.read(tmp,len);

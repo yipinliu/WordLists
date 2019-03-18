@@ -17,7 +17,8 @@ SOURCES += \
     backend.cpp \
     main.cpp \
     WordLists/algorithm.cpp \
-    WordLists/IO.cpp
+    WordLists/IO.cpp \
+    WordLists/trie.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,3 +38,4 @@ HEADERS += \
     WordLists/algorithm.hpp \
     WordLists/IO.hpp \
     WordLists/type.hpp \
+    WordLists/trie.hpp

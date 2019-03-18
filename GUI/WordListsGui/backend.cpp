@@ -2,6 +2,7 @@
 
 #include "WordLists/IO.hpp" //WordLists file
 #include "WordLists/algorithm.hpp" //WordLists file
+#include "WordLists/trie.hpp"
 
 #include <QDebug>
 #include <QFile>
@@ -72,12 +73,13 @@ void BackEnd::reset(){
     c_t = '\0';
 
 }
-void BackEnd::doJob(){
+int BackEnd::doJob(){
     //printf("here");
     int type = convert();
     if(type != 0) {
-        return;
+        return type;
     }
+    if(!(c_raw||c_file)) return -4;
     if(c_file){
         char* tmp;
         int no = fileToStr(&c_file[8],&tmp);
@@ -85,7 +87,7 @@ void BackEnd::doJob(){
         qDebug()<<c_raw;
         qDebug()<<no;
         if(tmp == nullptr){
-            return;
+            return -2;
         }
     }
     qDebug()<<c_file;
@@ -102,12 +104,13 @@ void BackEnd::doJob(){
     else {
         result_num = MostCharacters(wordList,c_h,c_t,results);
     }
-    if(result_num < 0) return;
+    if(result_num < 0) return -3;
     m_result = "";
     m_result.append(QString::number(result_num) + "\n");
     bool needNewLine = m_n != 0 || m_isw;
     for(auto& e : results){
         m_result.append(to_str(e,needNewLine));
+        m_result.append("\n");
     }
     delete c_raw;
     c_raw = nullptr;
@@ -115,7 +118,7 @@ void BackEnd::doJob(){
     c_file = nullptr;
     c_h = '\0';
     c_t = '\0';
-    return ;
+    return 0;
 
 }
 void BackEnd::svFile(){

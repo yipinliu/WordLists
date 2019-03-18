@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.0
+import QtQuick.Dialogs 1.3
 
 import libbackend 1.0
 
@@ -38,12 +39,15 @@ ApplicationWindow{
                 Rectangle{
                     border.color: "black"
                     anchors.fill: parent
-                    TextArea{
+                    ScrollView{
                         anchors.fill: parent
+                    TextArea{
+                        //anchors.fill: parent
                         id:output_text
                         readOnly: true
                         placeholderTextColor: "black"
                         placeholderText: backend.result
+                    }
                     }
                }
             }
@@ -101,6 +105,11 @@ ApplicationWindow{
         }
         */
 
+    }
+    MessageDialog{
+        id: msg
+        text: "Job done"
+        onAccepted: msg.close()
     }
 
     RowLayout{
@@ -181,6 +190,7 @@ ApplicationWindow{
                 }
             }
             RowLayout{
+
                 FileDialog{
                     id:fileDialog
                     title:"Please choose a file"
@@ -196,9 +206,30 @@ ApplicationWindow{
                 Button{
                    text: qsTr("输出")
                    onClicked: {
-                       backend.doJob();
-                       output.open();
-                       output_text.text = backend.result
+                       backend.job_result = backend.doJob();
+                       if(backend.job_result != 0){
+                           if(backend.job_result == -1){
+                               msg.text = "Error: multiple input";
+
+                           }
+                           else if(backend.job_result == -2){
+                               msg.text = "Error: no valid word input";
+                           }
+                           else if(backend.job_result == -3){
+                               msg.text = "Error: no result found";
+                           }
+                           else if(backend.job_result == -4){
+                               msg.text = "Error: please input words from textarea or file";
+                           }
+
+                           msg.open();
+                           backend.job_result = 0;
+                       }
+                       else{
+                           output.open();
+                           output_text.text = backend.result;
+                       }
+                       reset();
                    }
                 }
             }

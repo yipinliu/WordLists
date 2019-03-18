@@ -14,6 +14,7 @@ class BackEnd :public QObject
     Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged)
     Q_PROPERTY(QString result READ result WRITE setResult NOTIFY resultChanged)
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
+    Q_PROPERTY(int job_result READ job_result WRITE setResult NOTIFY job_resultChanged)
     QString m_words;
     bool m_isw;
 
@@ -25,6 +26,7 @@ class BackEnd :public QObject
     QString m_file;
     QString m_result;
     QString m_path;
+    int m_job_result;
 
 public:
     explicit BackEnd  (QObject *parent = nullptr);
@@ -37,8 +39,9 @@ public:
     int n()const;
     QString result()const{return m_result;}
     QString path()const{return m_path;}
+    int job_result()const{return m_job_result;}
 
-    Q_INVOKABLE void doJob();
+    Q_INVOKABLE int doJob();
     Q_INVOKABLE void svFile();
     Q_INVOKABLE void reset();
 signals:
@@ -50,6 +53,7 @@ signals:
     void pathChanged();
     void iswChanged();
     void resultChanged();
+    void job_resultChanged();
 private:
     char* c_raw;
     char* c_file;
@@ -67,6 +71,7 @@ public slots:
         m_result = result;
     }
     void setPath(QString path){m_path = path;}
+    void setResult(int job_result){m_job_result = job_result;}
 
 };
 
