@@ -131,10 +131,8 @@ char* to_str(list<Word*> &words,bool needNewLine){
     for(auto iter = words.begin(); iter != end; iter++){
         strncpy(p,(*iter)->raw,(*iter)->len);
         p = &p[(*iter)->len];
-        if(needNewLine){
-            *p = '\n';
-            p++;
-        }
+        *p='\n';
+        p++;
     }
     *p = '\0';
     return result;

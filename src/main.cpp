@@ -182,6 +182,7 @@ void output(int result_num, list<list<Word*> >&results){
         string outStr = to_string(result_num) + "\n";
         for(auto& e:results){
             outStr += string(to_str(e,(n!=-1||isw)));
+            outStr += "\n";
         }
         of.write(outStr.data(),outStr.length());
         of.close();
