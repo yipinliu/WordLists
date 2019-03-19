@@ -170,7 +170,9 @@ void output(int result_num, list<list<Word*> >&results){
     if(type == 'N' || type == 'n'){
         cout<<result_num<<endl;
         for(auto& e: results){
-            cout<<to_str(e,(n!=-1 || isw))<<endl;
+            char* tmp = to_str(e,(n!=-1||isw));
+            cout<<tmp<<endl;
+            delete[] tmp;
             cout<<endl;
         }
     }
@@ -181,7 +183,9 @@ void output(int result_num, list<list<Word*> >&results){
         ofstream of(fileName,ios_base::out|ios_base::binary);
         string outStr = to_string(result_num) + "\n";
         for(auto& e:results){
-            outStr += string(to_str(e,(n!=-1||isw)));
+            auto tmp = to_str(e,(n!=-1||isw));
+            outStr += tmp;
+            delete[] tmp;
             outStr += "\n";
         }
         of.write(outStr.data(),outStr.length());
