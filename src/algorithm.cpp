@@ -218,13 +218,15 @@ long MostWords2(struct WordList *wordlist, char head, char tail, list<list<Word*
 				chainlength = currentlength;
 				result.clear();
 				//printf("..............%d............\n",currentlength);
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
 				//printf(".............%d..........\n",result.size());
+				result.splice(result.end(),currentlongest);
 			}
 			else if(chainlength == currentlength && currentlength != 0){
 				//printf("..............%d............\n",currentlength);
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
 				//printf(".............%d..........\n",result.size());
+				result.splice(result.end(),currentlongest);
 			}
 		}
 		else if('a' <= head && head <= 'z' && (*index)->w->first == head){
@@ -232,10 +234,14 @@ long MostWords2(struct WordList *wordlist, char head, char tail, list<list<Word*
 			if(chainlength < currentlength){
 				chainlength = currentlength;
 				result.clear();
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				//swap(result,currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 			else if(chainlength == currentlength && currentlength != 0){
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				//swap(result,currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 		}
 		
@@ -262,11 +268,13 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 			currentlength=MostWords2(wordlist,i,tail,temp_result);
 			if(currentlength > chainlength){
 				result.clear();
-				result.merge(temp_result);
+				//result.merge(temp_result);
+				result.splice(result.end(),temp_result);
 				chainlength = currentlength;
 			}
 			else if(currentlength == chainlength && currentlength != 0){
-				result.merge(temp_result);
+				//result.merge(temp_result);
+				result.splice(result.end(),temp_result);
 			}
 		}
 	}
@@ -275,7 +283,8 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	temp_result.merge(result);
+	//temp_result.merge(result);
+	temp_result.splice(temp_result.end(),result);
 	result.clear();
 	for(auto iter = temp_result.begin(); iter != temp_result.end(); iter++){
 		if((*iter).size() > 1){
@@ -304,10 +313,12 @@ long MostCharacters2(struct WordList *wordlist, char head, char tail, list<list<
 			if(chainlength < currentlength){
 				chainlength = currentlength;
 				result.clear();
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 			else if(chainlength == currentlength && currentlength != 0){
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 		}
 		else if('a' <= head && head <= 'z' && (*index)->w->first == head){
@@ -315,10 +326,12 @@ long MostCharacters2(struct WordList *wordlist, char head, char tail, list<list<
 			if(chainlength < currentlength){
 				chainlength = currentlength;
 				result.clear();
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 			else if(chainlength == currentlength && currentlength != 0){
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 		}
 		
@@ -346,11 +359,13 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 			currentlength=MostCharacters2(wordlist,i,tail,temp_result);
 			if(currentlength > chainlength){
 				result.clear();
-				result.merge(temp_result);
+				//result.merge(temp_result);
 				chainlength = currentlength;
+				result.splice(result.end(),temp_result);
 			}
 			else if(currentlength == chainlength && currentlength != 0){
-				result.merge(temp_result);
+				//result.merge(temp_result);
+				result.splice(result.end(),temp_result);
 			}
 		}
 	}
@@ -359,7 +374,8 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	temp_result.merge(result);
+	//temp_result.merge(result);
+	temp_result.splice(temp_result.end(),result);
 	result.clear();
 	for(auto iter = temp_result.begin(); iter != temp_result.end(); iter++){
 		if((*iter).size() > 1){
@@ -388,13 +404,15 @@ long RequiredNumber2(struct WordList *wordlist, char head, char tail, long numbe
 		else if(head == 0){
 			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 0, tail, number);
 			if(number == currentlength){
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 		}
 		else if('a' <= head && head <= 'z' && (*index)->w->first == head){
 			currentlength = SingleSourceLongestPath(wordlist, topo, currentlongest, index, 0, tail, number);
 			if(number == currentlength){
-				result.merge(currentlongest);
+				//result.merge(currentlongest);
+				result.splice(result.end(),currentlongest);
 			}
 		}
 	}
@@ -432,8 +450,9 @@ long RequiredNumber(struct WordList *wordlist, char head, char tail, long number
 			temp_result.clear();
 			chainnumber=RequiredNumber2(wordlist,i,tail,number,temp_result);
 			if(chainnumber > 0){
-				result.merge(temp_result);
+				//result.merge(temp_result);
 				totalnumber+=chainnumber;
+				result.splice(result.end(),temp_result);
 			}
 		}
 	}
