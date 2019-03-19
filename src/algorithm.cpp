@@ -1,6 +1,5 @@
 #include "algorithm.hpp"
 #include "type.hpp"
-#include <string.h>
 using namespace std;
 //the following two functions are standard dfs and topo sort algorithms
 void DFS_Visit(struct ListNode &v, struct WordList *wordlist, long &time, list<ListNode*> &topo){
@@ -275,8 +274,10 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	if(chainlength == 0)
 		return NOTFOUND;
 	for(auto iter = result.begin(); iter != result.end(); iter++){
-		if((*iter).size() == 1)
+		if((*iter).size() == 1){
 			result.erase(iter);
+			iter--;
+		}
 	}
 	if(result.size() == 0)
 		return NOTFOUND;
@@ -318,6 +319,7 @@ long MostCharacters2(struct WordList *wordlist, char head, char tail, list<list<
 		}
 		
 	}
+
 	if(chainlength == 0)
 		return NOTFOUND;
 	/*printf("------------------------%d\n",result.size());
@@ -354,8 +356,10 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	if(chainlength == 0)
 		return NOTFOUND;
 	for(auto iter = result.begin(); iter != result.end(); iter++){
-		if((*iter).size() == 1)
+		if((*iter).size() == 1){
 			result.erase(iter);
+			iter--;
+		}
 	}
 	if(result.size() == 0)
 		return NOTFOUND;

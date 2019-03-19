@@ -8,6 +8,7 @@
 #define NINF -1
 #include "type.hpp"
 #include <string.h>
+#include <stdio.h>
 
 
 //This function can find a word chain with most words
