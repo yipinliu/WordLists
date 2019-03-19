@@ -201,9 +201,11 @@ long MostWords2(struct WordList *wordlist, char head, char tail, list<list<Word*
 	long currentlength = 0;
 	list<ListNode*> topo;
 	list<list<Word*> > currentlongest;
+	//printf("----%d----\n",topo.size());
 	DFS(wordlist, topo, head, tail);
 	//printf("lll");
-	//printf("----%d----",topo.size());
+	//printf("----%d----\n",topo.size());
+
 
 	for(auto index = topo.begin(); index != topo.end(); index++){
 		currentlongest.clear();
@@ -273,14 +275,16 @@ long MostWords(struct WordList *wordlist, char head, char tail, list<list<Word*>
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	for(auto iter = result.begin(); iter != result.end(); iter++){
-		if((*iter).size() == 1){
-			result.erase(iter);
-			iter--;
+	temp_result.merge(result);
+	result.clear();
+	for(auto iter = temp_result.begin(); iter != temp_result.end(); iter++){
+		if((*iter).size() > 1){
+			result.push_back(*iter);
 		}
 	}
 	if(result.size() == 0)
 		return NOTFOUND;
+	//printf("chainlength:%d\n",chainlength);
 	return chainlength;
 }
 
@@ -355,14 +359,16 @@ long MostCharacters(struct WordList *wordlist, char head, char tail, list<list<W
 	}
 	if(chainlength == 0)
 		return NOTFOUND;
-	for(auto iter = result.begin(); iter != result.end(); iter++){
-		if((*iter).size() == 1){
-			result.erase(iter);
-			iter--;
+	temp_result.merge(result);
+	result.clear();
+	for(auto iter = temp_result.begin(); iter != temp_result.end(); iter++){
+		if((*iter).size() > 1){
+			result.push_back(*iter);
 		}
 	}
 	if(result.size() == 0)
 		return NOTFOUND;
+	//printf("chainlength:%d\n",chainlength);
 	return chainlength;
 }
 
