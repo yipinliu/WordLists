@@ -8,29 +8,24 @@
 注1：-f参数的使用取决于用户是否要从文本文件中读取单词，若在命令行中以字符串的形式输入则不需要，不使用-f参数的结果如下图：
 
 ![test_1_2](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_2.png?raw=true) 
-
 该输入未使用-f参数，从而程序将输入的路径识别为字符串输入从而得到结果。
-
 注2：为方便展示程序运行结果，以下测试结果将不再存入文件中，而是在命令行中直接输出。
-![test_1_3](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_3.png?raw=true)
 
+![test_1_3](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_3.png?raw=true)
 上图为程序在命令行下执行-w参数的运行结果，数字4为单词链的单词数，后接搜索到的单词链。
 
 ![test_1_4](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_4.png?raw=true)
-
 上图为程序在命令行下执行-c参数的运行结果，数字34为搜到的字母最多的单词链的字母数，后接搜索到的单词链。
 ![test_1_5](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_5.png?raw=true)
-
 上图为程序在命令行下执行-t参数的运行结果，其中第二个字母t表示指定的尾字母为t的单词链，数字3为单词链的单词数，后接搜索到的单词链。
+
 ![test_1_6](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_6.png?raw=true)
-
 上图为程序在命令行下执行-h参数的运行结果，其中第二个字母e表示指定的首字母为t的单词链，数字2为单词链的单词数，后接搜索到的单词链。
-![test_1_7](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_7.png?raw=true)
 
+![test_1_7](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_7.png?raw=true)
 上图为程序在命令行下-t参数及-h参数结合使用的运行结果，其中第二个字母a表示指定的首字母为a的单词链，第四个字母e表示指定的尾字母为e的单词链，二者结合即要求单词链为的首尾字母分别为a、e的单词链，搜索成功则会弹出Job done提示，输出在命令行中时，数字2为单词链的单词数，后接搜索到的单词链。
 
 ![test_1_8](https://github.com/yipinliu/WordLists/raw/master/doc/test_1_8.png?raw=true)
-
 对于指定单词链的单词个数，可以用-n参数来查询，如上图所示，利用-n和3两个参数，搜索了test_1.txt中满足单词个数为3的单词链，得到了两个结果，将其输出在命令行中即如上图所示。
   
 至此，对于简单测试文件已经测试完毕，其结果和人工运算结果相比较是完全一致的，程序的正确性得到初步的肯定。
