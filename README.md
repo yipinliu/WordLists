@@ -27,3 +27,14 @@ or src/(Debug|Release)/WordLists params (Windows)
 4. 编译运行
 ```
 
+**3、Command Line Usage**
+
+```bash
+./WordList (-w/-c/-n NUM) [-h/-t CHAR] ("char"/-f path_to_the_file)
+```
+
+**4、OutPut Interpretation**
+
+-w/-c: will display the length of the word chain and the content of the word chain(may be more than one)
+
+-n: will display the number of word chain which meet the requirement and the content of the word chain
