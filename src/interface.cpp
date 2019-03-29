@@ -192,10 +192,9 @@ int gen_chain_number(char* words[], int len, std::list<std::list<char*> > &resul
 	long result_num;
 	result_num = RequiredNumber(wordlist, low_head, low_tail, number, results);
 	if(result_num <= 0) return result_num;
-    int k = 0;
     for(auto iterr = results.begin(); iterr != results.end(); iterr++){
     	list<char*> chain;
-    for(auto iter = (*iterr).begin(); iter != (*iterr).end(); iter++, k++){
+    for(auto iter = (*iterr).begin(); iter != (*iterr).end(); iter++){
     	int word_length = 0;
     	while((*iter)->raw[word_length] != '\0') word_length++;
     	char *result_word = (char *)malloc((word_length+1) * sizeof(char));
