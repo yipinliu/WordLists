@@ -52,7 +52,7 @@ int strToFile(char* fileName, char* raw, int len){
     if(!file) return errno;
     fwrite(raw,sizeof(char),len,file);
     fclose(file);
-    return IO_OK;
+    return 0;
     
 }
 void charCopy(const char* src, char* dst, int len){

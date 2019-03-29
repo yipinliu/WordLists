@@ -42,7 +42,7 @@ include_directories("../src")
 
 enable_testing()
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(example example.cpp)
-target_link_libraries(example gtest_main)
-target_link_libraries(example IO)
-add_test(NAME example_test COMMAND example)
+
+add_executable(io_test io_test.cpp)
+target_link_libraries(io_test gtest_main IO)
+add_test(NAME io_test COMMAND io_test)
