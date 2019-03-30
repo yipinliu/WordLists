@@ -8,6 +8,9 @@ add_executable(WordLists ${SRC_LIST})
 add_library(IO trie.cpp IO.cpp)
 add_library(alg algorithm.cpp)
 add_library(trie trie.cpp)
+add_library(interface interface.cpp)
+
+target_link_libraries(interface PRIVATE trie IO alg)
 
 #install(TARGETS WordLists DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/")
 
