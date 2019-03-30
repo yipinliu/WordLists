@@ -16,4 +16,5 @@ int strToFile(char* file, char* raw, int len);
 Word* getOneWord(const char** raw,Trie& tree);
 WordList* getWords(const char* raw);
 char* to_str(std::list<Word*>& words,bool needNewLine);
+void charCopy(const char* src, char* dst, int len);
 
