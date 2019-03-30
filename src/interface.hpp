@@ -4,7 +4,7 @@
 #define __INTERFACE_HPP__
 
 //This function aims to get the word chains with most words
-//@words:input word chain(It must be legal, this funciton will not check its availability)
+//@raw:input word chain
 //@len: the length of input chain
 //@result: the word chain with most words
 //@head: the head character which is required in the result chain, it must be 0 if there is no such a requirement
@@ -12,7 +12,7 @@
 int gen_chain_word(char* raw, int len, char* result[], char head, char tail);
 
 //This function aims to get the word chains with characters
-//@words:input word chain(It must be legal, this funciton will not check its availability)
+//@words:input word chain
 //@len: the length of input chain
 //@result: the word chain with most characters
 //@head: the head character which is required in the result chain, it must be 0 if there is no such a requirement
@@ -20,7 +20,7 @@ int gen_chain_word(char* raw, int len, char* result[], char head, char tail);
 int gen_chain_char(char* raw, int len, char* result[], char head, char tail);
 
 //This function aims to get the word chains with specific words
-//@words:input word chain(It must be legal, this funciton will not check its availability)
+//@words:input word chain
 //@len: the length of input chain
 //@result: the word chain with specific words(all chains will return)
 //@head: the head character which is required in the result chain, it must be 0 if there is no such a requirement
