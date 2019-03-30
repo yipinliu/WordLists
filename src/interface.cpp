@@ -41,7 +41,7 @@ int gen_chain_word(char* raw, int len, char* result[], char head, char tail){
 }
 
 
-int gen_chain_char(char* raw, int len, char* result[], char head, char tail){
+int gen_chain_char(char* raw, int len, char* result[], char head, char tail, char mode){
 	auto wordlist = getWords(raw);
 	char low_head = check(head), low_tail = check(tail);
 	list<list<Word*> >results;
@@ -59,12 +59,21 @@ int gen_chain_char(char* raw, int len, char* result[], char head, char tail){
     	result_word[word_length] = '\0';
     	result[k] = result_word;
     }
-    return first_result.size();
+    if(mode == 0) return first_result.size();
+    else if(mode == 1) return result_num;
+    else{
+        printf("Illegal mode.\n");
+        return -1;
+    }
 }
 
 
 int gen_chain_number(char* raw, int len, std::list<std::list<char*> > &result, char head, char tail, int number){
-	auto wordlist = getWords(raw);
+	if(number <= 1){
+        printf("Number must be greater than 1.\n");
+        return -1;
+    }
+    auto wordlist = getWords(raw);
 	char low_head = check(head), low_tail = check(tail);
 	list<list<Word*> >results;
 	long result_num;

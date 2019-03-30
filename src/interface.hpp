@@ -17,7 +17,7 @@ int gen_chain_word(char* raw, int len, char* result[], char head, char tail);
 //@result: the word chain with most characters
 //@head: the head character which is required in the result chain, it must be 0 if there is no such a requirement
 //@tail: the tail character which is required in the result chain, it must be 0 if there is no such a requirement
-int gen_chain_char(char* raw, int len, char* result[], char head, char tail);
+int gen_chain_char(char* raw, int len, char* result[], char head, char tail, char mode);
 
 //This function aims to get the word chains with specific words
 //@words:input word chain
