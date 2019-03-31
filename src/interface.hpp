@@ -2,6 +2,8 @@
 
 #ifndef __INTERFACE_HPP__
 #define __INTERFACE_HPP__
+#include "IO.hpp"
+#include "algorithm.hpp"
 
 //This function aims to get the word chains with most words
 //@raw:input word chain

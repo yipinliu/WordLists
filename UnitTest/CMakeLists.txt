@@ -47,13 +47,9 @@ enable_testing()
 # Now simply link against gtest or gtest_main as needed. Eg
 
 add_executable(io_test io_test.cpp)
-target_compile_options(io_test PRIVATE --coverage)
-target_link_libraries(io_test PRIVATE gcov)
 target_link_libraries(io_test PRIVATE gtest_main IO)
 add_test(NAME io_test COMMAND io_test)
 
-add_executable(interface_test interfaceAlgorithm.cpp)
-target_compile_options(interface_test PRIVATE --coverage)
-target_link_libraries(interface_test PRIVATE gcov)
+add_executable(interface_test interface_test.cpp)
 target_link_libraries(interface_test PRIVATE gtest_main interface)
 add_test(NAME interface_test COMMAND interface_test)
