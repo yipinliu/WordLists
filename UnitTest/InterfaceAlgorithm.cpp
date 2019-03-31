@@ -56,7 +56,6 @@ namespace UnitTest1
 			len = gen_chain_word(raw, 0, result, 'h', 't');
 			len = gen_chain_word(r ,0, result, 0, 0);
 			Assert::IsTrue(len == 4);
-			// TODO: 在此输入测试代码
 		}
 		TEST_METHOD(TestMethod6)
 		{
@@ -65,7 +64,6 @@ namespace UnitTest1
 			Assert::IsTrue(len == 2);
 			int len1 = gen_chain_number(r, 0, result1, 0, 0, 3);
 			Assert::IsTrue(len1 == 2);
-			// TODO: 在此输入测试代码
 		}
 
 	};
