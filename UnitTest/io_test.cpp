@@ -112,5 +112,5 @@ TEST(charCopy, all){
     char *dst = new char[15];
     dst[14] = '\0';
     charCopy(src,dst,14);
-    EXPECT_EQ("aabbccddeeffgg",dst);
+    EXPECT_STREQ("aabbccddeeffgg",dst);
 }
