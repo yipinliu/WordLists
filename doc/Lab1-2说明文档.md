@@ -209,7 +209,9 @@ TEST_METHOD(test_MostCharacter1){
 ```
 对于interface模块，我们**首先测试了algorithm模块，分别使用了project1中助教提供的test_1.txt 以及小组设计的 test_9.txt**(但不再是通过读取绝对路径再从文件中读取单词链，而是直接存储在`char *r`以及`char *raw`中)，**再在此基础上对interface模块进行测试。**
 
-进行测试时，先对核心代码模块`algorithm.cpp`中三个函数`MostWords`、`RequireNumbers`、`MostCharactor`进行测试，测试样例模拟了在命令行下使用`-w`、`-c`、`-n`参数，再通过判断是否与预期相符合，从而确定函数的正确性及覆盖率，从提供的测试文档的结果上看，单元测试的覆盖率超过了90%。![](https://github.com/yipinliu/WordLists/raw/master/doc/interface_coverage.png?raw=true)
+进行测试时，先对核心代码模块`algorithm.cpp`中三个函数`MostWords`、`RequireNumbers`、`MostCharactor`进行测试，测试样例模拟了在命令行下使用`-w`、`-c`、`-n`参数，再通过判断是否与预期相符合，从而确定函数的正确性及覆盖率。再之后，我们再对interface模块进行测试，测试设计思路依然和algorithm模块的测试思路相同。
+
+从提供的测试文档的结果上看，单元测试的覆盖率超过了90%。![](https://github.com/yipinliu/WordLists/raw/master/doc/interface_coverage.png?raw=true)
 
 其中，对于某些函数的一些非法输出处理上或者是有多个分支的代码行数较多，导致如果不是非法输出时或是分支条件不满足就不经过该块，从而覆盖率低于90%，但整体覆盖率超过了90%。
 
