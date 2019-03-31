@@ -1,5 +1,7 @@
 # WordLists
 
+## Lab1-1
+
 **1、Build**
 
 ```bash
@@ -38,3 +40,25 @@ or src/(Debug|Release)/WordLists params (Windows)
 -w/-c: will display the length of the word chain and the content of the word chain(may be more than one)
 
 -n: will display the number of word chain which meet the requirement and the content of the word chain
+
+## Lab1-2
+
+**接口文件目录：**
+
+```
+src/interface.cpp
+```
+
+**算法模块及接口测试文件目录：**
+
+```
+UniTest/interface_test_vs.cpp
+UniTest/interface_test.cpp
+```
+
+**IO模块测试文件目录：**
+
+```
+UniTest/IO_test.cpp
+```
+
