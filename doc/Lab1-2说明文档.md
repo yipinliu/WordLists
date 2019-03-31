@@ -194,4 +194,25 @@ TEST(fileToStr, invalid_file){
 IO虽然简单，但是测试模块仍然进行了充足的测试，大部分函数都针对多种情况进行了测试，最后`lcov`覆盖率检查显示覆盖率达到了`100%`:
 
 ![](./io_coverage.png)
+### 3. interface模块的测试及Visual Studio用法示例
+`Visual Studio`在使用前需要将项目先导入，再在同一个解决方法下建立测试项目，通过obj文件链接两个项目。特别地，在测试文件中，我们需要在测试文件中将所测试的源文件对应头文件include进来。
+
+`Visual Studio`使用`TEST_METHOD(){}`宏声明测试函数，再用`Assert`函数进行判断即可。我们提供了一个名为`interface_test_vs.cpp`的测试项目文件，用该测试可以对几个接口函数进行测试，给出下面一个例子：
+
+```C++
+TEST_METHOD(test_MostCharacter1){
+     struct WordList *wordlist = getWords(raw);
+     std::list<std::list<Word*> >results;
+     long len = MostCharacters(wordlist, 0, 0, results);
+     Assert::IsTrue(len == 64);
+}
+```
+对于interface模块，我们**首先测试了algorithm模块，分别使用了project1中助教提供的test_1.txt 以及小组设计的 test_9.txt**(但不再是通过读取绝对路径再从文件中读取单词链，而是直接存储在`char *r`以及`char *raw`中)，**再在此基础上对interface模块进行测试，从提供的测试文档的结果上看，单元测试的覆盖率超过了90%**。![](https://github.com/yipinliu/WordLists/raw/master/doc/interface_coverage.png?raw=true)
+
+其中，对于某些函数的一些非法输出处理上或者是有多个分支的代码行数较多，导致如果不是非法输出时或是分支条件不满足就不经过该块，从而覆盖率低于90%，但整体覆盖率超过了90%。
+
+另外地，`Visual Studio`可以显示代码覆盖率着色，对于我们查看代码未覆盖块十分的方便，如下图：
+![](https://github.com/yipinliu/WordLists/raw/master/doc/code_uncoverd.png?raw=true)
+
+其中，未覆盖代码部分着色为红色，其余为浅色。
 
