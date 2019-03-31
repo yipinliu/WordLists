@@ -105,12 +105,12 @@ TEST(to_str, words){
     iter->len = 4;
     iter->raw = "4567";
     char *p = to_str(words);
-    EXPECT_STREQ("1234567",p);
+    EXPECT_STREQ("123\n4567\n",p);
 }
 TEST(charCopy, all){
     char *src = "AaBbCcDdEeFfGg";
     char *dst = new char[15];
     dst[14] = '\0';
     charCopy(src,dst,14);
-    EXPECT_EQ(src,dst);
+    EXPECT_EQ("aabbccddeeffgg",dst);
 }
