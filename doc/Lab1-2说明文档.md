@@ -2,7 +2,7 @@
 
 [TOC]
 
-### 一、接口实现
+## 一、接口实现
 
 **1、获取单数数量最多的单词链**
 
@@ -165,6 +165,9 @@ cmake --build .
 ctest ##直接在构建目录下运行测序即可
 #也可以单独运行测试程序
 ./io_test;./interface_test
+# 查看代码覆盖率
+lcov --directory . --capture --output-file test_coverage.info
+geninfo --output-directory coverage test_coverage.info
 ```
 
 值得注意的是，测试模块使用`gtest`框架，但不需要自己下载`gtest`源码并自行构建，我们使用配置`CMakeLists.txt`的方式使这一步骤自动化进行，这要求在运行`cmake`时需要保证联网环境。
