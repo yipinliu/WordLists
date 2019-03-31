@@ -4,6 +4,8 @@
 #include "type.hpp"
 #include "IO.hpp"
 #include <list>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
