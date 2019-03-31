@@ -107,9 +107,8 @@ int BackEnd::doJob(){
     if(result_num < 0) return -3;
     m_result = "";
     m_result.append(QString::number(result_num) + "\n");
-    bool needNewLine = m_n != 0 || m_isw;
     for(auto& e : results){
-        m_result.append(to_str(e,needNewLine));
+        m_result.append(to_str(e));
         m_result.append("\n");
     }
     delete c_raw;

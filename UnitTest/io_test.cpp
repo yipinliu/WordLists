@@ -88,3 +88,29 @@ TEST(getWords, repeat){
     EXPECT_EQ(1, words['a'-'a'].tlist.size());
     EXPECT_EQ(1, words['b'-'a'].tlist.size());
 }
+TEST(to_str, null){
+    list<Word* > words;
+    char *p = nullptr;
+    p = to_str(words);
+    EXPECT_EQ(*p,'\0');
+}
+TEST(to_str, words){
+    list<Word* >words;
+    words.push_back(new Word);
+    auto iter = words.back();
+    iter->len = 3;
+    iter->raw = "123";
+    words.push_back(new Word);
+    iter = words.back();
+    iter->len = 4;
+    iter->raw = "4567";
+    char *p = to_str(words);
+    EXPECT_STREQ("1234567",p);
+}
+TEST(charCopy, all){
+    char *src = "AaBbCcDdEeFfGg";
+    char *dst = new char[15];
+    dst[14] = '\0';
+    charCopy(src,dst,14);
+    EXPECT_EQ(src,dst);
+}

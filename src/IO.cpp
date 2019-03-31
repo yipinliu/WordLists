@@ -123,7 +123,7 @@ int getLen(list<Word*> &words){
     }
     return sum;
 }
-char* to_str(list<Word*> &words,bool needNewLine){
+char* to_str(list<Word*> &words){
     int len = getLen(words) + words.size()+1;
     char* result = new char[len];
     char* p = result;
