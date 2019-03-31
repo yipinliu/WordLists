@@ -35,6 +35,7 @@ int gen_chain_word(char* raw, int len, char* result[], char head, char tail);
 **接口使用示例：**
 
 ```c++
+#include "interface.hpp"
 char *input = "end of the world";
 char *result[4] = {0}; //请注意必须要在调用接口之前指定result数组的大小，否则报错
 int resultnum = gen_chain_word(input, 4, result, 0, 0);
@@ -74,6 +75,7 @@ int gen_chain_char(char* raw, int len, char* result[], char head, char tail, cha
 **接口使用示例：**
 
 ```c++
+#include "interface.hpp"
 char *input = "end of the world";
 char *result[4] = {0}; //请注意必须要在调用接口之前指定result数组的大小，否则报错
 int resultnum = gen_chain_char(input, 4, result, 0, 0, 1);
@@ -113,6 +115,7 @@ int gen_chain_number(char* raw, int len, std::list<std::list<char*> > &result, c
 **接口使用示例：**
 
 ```c++
+#include "interface.hpp"
 char *input = "end of the world";
 std::list<std::list<char*> > result;
 int resultnum = gen_chain_char(input, 4, result, 0, 0, 2);
