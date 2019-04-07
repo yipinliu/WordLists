@@ -1,9 +1,15 @@
-#include<list>
-
 #ifndef __INTERFACE_HPP__
 #define __INTERFACE_HPP__
 #include "IO.hpp"
 #include "algorithm.hpp"
+#include<list>
+#define HEADORTAIL_ILLEGAL -1
+#define NUMBER_LESSTHANONE -2
+#define NOTFOUNDD -3
+#define LEN_LESSTHANZERO -4
+#define NUMBER_LARGERTHANLEN -5
+#define ILLEGAL_MODE -6
+#define UNKNOWNERROR -7
 
 //This function aims to get the word chains with most words
 //@raw:input word chain
