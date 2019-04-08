@@ -189,7 +189,7 @@ void error_handler(int err){
 
 ### 一、针对异常处理测试的说明
 
-因为在原工程中，我们调用的函数为`MostWords`、`MostCharacters`、`RequiredNumber`三个函数，而不是要求的三个接口函数`gen_chain_word`、`gen_chain_char`、`gen_chain_number`，所以我们重新设计了一个`test.cpp`文件用以测试三个接口函数能否对异常做出处理。需要特别说明地是，三个接口函数最终依然是靠调用三个核心函数来实现其功能的，但异常检测函数仅包含于接口函数中，当检测到异常时会直接抛出而不会再调用核心函数，这是设计`test.cpp`文件的原因。
+因为在原工程中，我们调用的函数为`MostWords`、`MostCharacters`、`RequiredNumber`三个函数，而不是要求的三个接口函数`gen_chain_word`、`gen_chain_char`、`gen_chain_number`，所以我们在原`main.cpp`的基础上重新设计了一个`test.cpp`文件用以测试三个接口函数能否对异常做出处理。需要特别说明地是，三个接口函数最终依然是靠调用三个核心函数来实现其功能的，但异常检测函数仅包含于接口函数中，当检测到异常时会直接抛出而不会再调用核心函数，这是设计`test.cpp`文件的原因。
 
 首先，我们提供了调用核心函数得到的结果用以和接下来测试结果进行比较：
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_1.png?raw=true)
