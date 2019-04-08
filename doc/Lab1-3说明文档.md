@@ -186,13 +186,18 @@ void error_handler(int err){
 ```
 
 ## 测试
+
 ###一、针对异常处理测试的说明
+
 因为在原工程中，我们调用的函数为`MostWords`、`MostCharacters`、`RequiredNumber`三个函数，而不是要求的三个接口函数`gen_chain_word`、`gen_chain_char`、`gen_chain_number`，所以我们重新设计了一个`test.cpp`文件用以测试三个接口函数能否对异常做出处理。需要特别说明地是，三个接口函数最终依然是靠调用三个核心函数来实现其功能的，但异常检测函数仅包含于接口函数中，当检测到异常时会直接抛出而不会再调用核心函数，这是设计`test.cpp`文件的原因。
 
 首先，我们提供了调用核心函数得到的结果用以和接下来测试结果进行比较：
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_1.png?raw=true)
+
 ###二、异常处理测试
+
 **1、参数正确使用**
+
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_2.png?raw=true)
 
 通过与调用核心函数得到的结果对比，可以看到，因为接口函数是更上层的函数，所以它的使用不会影响到核心函数的正确性，得到的结果是正确的。
@@ -207,21 +212,25 @@ void error_handler(int err){
 可以看到，我们分别对三种情况分别进行了测试，只要是要求的首尾字母中有一个是英文字母就会抛出异常：`ERROR:The head or tai character is illegal!`。
 
 **3、检测输入的参数len是否大于0**
+
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_7.png?raw=true)
 
 同样地，我们也添加了一个参数-l用以改变len的值(虽然对我们的算法来说len的值对结果完全没有什么影响)，它默认值是0，我们可以更改其值，但不改变结果。唯一有区别的是，当其值为0时，会抛出异常：`ERROR:Len must be larger than 0`，这样，len参数是否大于0就得到了检测。
 
 **4、检测输入的参数number是否大于1**
+
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_4.png?raw=true)
 
 与正确结果相比，我们得到一个异常提示：`ERROR:The specified number must be larger than 1`，因为只有当number参数大于1时才是有效的，所以不大于1时，都会抛出异常。
 
 **5、检测调用的核心算法函数的返回值**
+
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_5.png?raw=true)
 
 在上图中，我们得到了三个异常提示，其中第一、第二提示均与len有关，这是无关紧要的，所以不会直接中止程序，但第三个异常是致命的。它告诉我们，`ERROR:Unable to find the required word chain`，即找不到要求的单词链，说明了不符合要求的单词链。另外地，核心算法函数返回-1时，即是我们的第一个测试：首尾字符不合法，两者都会终止程序执行。
 
 **6、检测mode参数的合法性**
+
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_6.png?raw=true)
 
 在注2中提到过，我们为`test.cpp`提供了一个新参数mode，用以调整输出格式，它默认是0，表示输出的是单词链的单词数，可以通过手动更改为其他数，但其中只有0(单词链的单词数)、1(单词链的字母数)是有意义的，更改为其他数会抛出异常`ERROR:Illegal mode`，从而终止程序。
