@@ -22,9 +22,11 @@ void error_handler(int err){
             break;
         case LEN_LESSTHANZERO:
             printf("ERROR:Len must be larger than 0.\n");
+            return;
             break;
         case NUMBER_LARGERTHANLEN:
             printf("ERROR:Number must be less than len.\n");
+            return;
             break;
         case ILLEGAL_MODE:
             printf("ERROR:Illegal mode.\n");
