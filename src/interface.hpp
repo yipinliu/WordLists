@@ -36,5 +36,5 @@ int gen_chain_char(char* raw, int len, char* result[], char head, char tail, cha
 //@number: the number of words required in the result chain
 int gen_chain_number(char* raw, int len, std::list<std::list<char*> > &result, char head, char tail, int number);
 
-
+char* text_process(const char* file);
 #endif

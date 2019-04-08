@@ -4,8 +4,9 @@ project(WordLists-UnitTest LANGUAGES CXX)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         PROPERTY EP_UPDATE_DISCONNECTED 1)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage -fprofile-arcs -ftest-coverage")
-
+if(CMAKE_BUILD_TYPE STREQUAL "Coverage")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage -fprofile-arcs -ftest-coverage")
+endif()
 
 
 # Download and unpack googletest at configure time
@@ -53,3 +54,11 @@ add_test(NAME io_test COMMAND io_test)
 add_executable(interface_test interface_test.cpp)
 target_link_libraries(interface_test PRIVATE gtest_main interface)
 add_test(NAME interface_test COMMAND interface_test)
+
+add_executable(text_process_test text_process_test.cpp)
+target_link_libraries(text_process_test PRIVATE gtest_main interface)
+add_test(NAME text_process_test COMMAND text_process_test)
+
+add_executable(get_words_exception_test get_words_exception_test.cpp)
+target_link_libraries(get_words_exception_test PRIVATE gtest_main interface)
+add_test(NAME get_words_exception_test COMMAND text_process_test)

@@ -6,6 +6,29 @@
 
 ### 一、预处理中的异常
 
+由于原来接口的定义中，`get_words_*`等接口函数只需要传入字符串的原始数据即可，所以在封装`text_process`接口时只需要处理传入空指针以及打开文件失败的异常情况即可。由于如果文件为空的话对于后面的处理没有任何意义，所以文件为空也被当做异常处理。考虑到读取文件失败可能不是使用者的程序中的致命错误，所以这里异常处理采用抛出异常的方式对异常进行处理，而不是终止应用程序。至于产生异常后如何处理，由接口的调用者来处理。
+
+由于此前就已经在`IO.hpp`封装有`fileToStr`接口，并且在单元测试中已经针对该函数进行了充分的测试，所以只需要根据它的函数返回值加入异常处理进一步封装即可。由于该接口主要面向调用者，所以我们将`text_process`接口封装在`interface.hpp`中。具体代码如图所示：
+
+```c++
+char* text_process(const char* file){
+    char *p = nullptr;
+    if(file == nullptr){
+        throw std::invalid_argument("argument can not be nullptr");
+    }
+    int state = fileToStr(file,&p);
+    if(state == 1){
+         throw std::invalid_argument("Open file failed!\n"
+            "Please check whether the file exists,"
+            "or whether you have permission to access the file");
+    }
+    else if(state == -1){
+        throw std::invalid_argument("It is empty file");
+    }
+    return p;
+}
+```
+
 
 
 ### 二、接口中的异常
@@ -186,6 +209,32 @@ void error_handler(int err){
 ```
 
 ## 测试
+
+### 一、text_process异常处理测试结果
+
+针对`text_process`的异常处理测试，我们继续使用此前的测试框架`gtest`，并将测试代码至于`UnitTest/text_process_test.cpp`中，使用`cmake`自带的工具`ctest`除了可以运行新增的异常测试，还可以直接运行以前的单元测试，简单方便，`cmake`和`ctest`在本项目中的使用可参见此前的实验文档。测试代码如下：
+
+```cpp
+TEST(text_process,nullptr_exception){
+    try{
+        char *p = nullptr;
+        p = text_process(nullptr);
+    }
+    catch(const invalid_argument &e){
+        cout<<e.what()<<endl;
+        return;
+    }
+    FAIL();// it should not reach here.
+}
+```
+
+完整测试可参见`UnitTest/text_process_test.cpp`.
+
+测试结果：
+
+![](./text_process.PNG)
+
+由结果可知，对代码的改动没有影响程序的正确性，同时异常处理符合预期。
 
 ### 一、针对异常处理测试的说明
 

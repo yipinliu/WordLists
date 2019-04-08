@@ -12,7 +12,7 @@ add_library(interface STATIC interface.cpp)
 
 target_link_libraries(interface PRIVATE trie IO alg)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Coverage")
     target_compile_options(IO PRIVATE --coverage)
     target_link_libraries(IO PRIVATE gcov)
     target_compile_options(alg PRIVATE --coverage)

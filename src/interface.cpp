@@ -6,6 +6,7 @@
 #include <list>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdexcept>
 
 using namespace std;
 
@@ -118,10 +119,15 @@ int check_mode(int mode, int mode_0, int mode_1){
         error_handler(err);
     }
 }
-
+void check_raw(char* raw){
+    if(raw) return;
+    printf("cannot process nullptr char stream");
+    exit(0);
+}
 int gen_chain_word(char* raw, int len, char* result[], char head, char tail){
 	char low_head = check_char(head), low_tail = check_char(tail);
     check_len(len);
+    check_raw(raw);
     auto wordlist = getWords(raw);
 	list<list<Word*> >results;
 	long result_num;
@@ -145,6 +151,7 @@ int gen_chain_word(char* raw, int len, char* result[], char head, char tail){
 int gen_chain_char(char* raw, int len, char* result[], char head, char tail, char mode){
 	char low_head = check_char(head), low_tail = check_char(tail);
     check_len(len);
+    check_raw(raw);
     auto wordlist = getWords(raw);
 	list<list<Word*> >results;
 	long result_num;
@@ -168,6 +175,7 @@ int gen_chain_char(char* raw, int len, char* result[], char head, char tail, cha
 int gen_chain_number(char* raw, int len, std::list<std::list<char*> > &result, char head, char tail, int number){
     char low_head = check_char(head), low_tail = check_char(tail);
     check_len(len);
+    check_raw(raw);
     check_number(number, len);
     auto wordlist = getWords(raw);
 	list<list<Word*> >results;
@@ -187,4 +195,21 @@ int gen_chain_number(char* raw, int len, std::list<std::list<char*> > &result, c
     	result.push_back(chain);
 	}
     return result_num;
+}
+
+char* text_process(const char* file){
+    char *p = nullptr;
+    if(file == nullptr){
+        throw std::invalid_argument("argument can not be nullptr");
+    }
+    int state = fileToStr(file,&p);
+    if(state == 1){
+         throw std::invalid_argument("Open file failed!\n"
+            "Please check whether the file exists,"
+            "or whether you have permission to access the file");
+    }
+    else if(state == -1){
+        throw std::invalid_argument("It is empty file");
+    }
+    return p;
 }
