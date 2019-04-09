@@ -2,6 +2,14 @@
 
 [TOC]
 
+## 成员分工
+
+**彭昀：**主要负责Core模块异常处理
+
+**刘奕品：**主要负责预处理模块异常处理及测试
+
+**韦俊朗：**主要负责Core模块测试
+
 ## 异常处理
 
 ### 一、预处理中的异常
@@ -245,7 +253,7 @@ TEST(text_process,nullptr_exception){
 
 ### 二、异常处理测试
 
-**1、参数正确使用**
+**1、参数正确使用(回归测试)**
 
 ![](https://github.com/yipinliu/WordLists/raw/master/doc/project1_3_2.png?raw=true)
 
